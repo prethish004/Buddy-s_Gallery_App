@@ -447,7 +447,7 @@
 
 // export default ImageGallery;
 
-import React, { useState, useEffect } from 'react';
+import { useState, useEffect } from 'react';
 import useFriestore from "../hooks/useFriestore";
 import { FaCircleDown } from "react-icons/fa6";
 
