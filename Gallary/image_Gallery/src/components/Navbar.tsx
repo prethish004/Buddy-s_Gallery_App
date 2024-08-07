@@ -16,7 +16,7 @@
 //   )
 // }
 // export default Navbar;
-import React, { useState, useEffect } from "react";
+import { useState, useEffect } from "react";
 import { signOut, onAuthStateChanged } from "firebase/auth";
 import { auth } from "../firebase/config";
 
