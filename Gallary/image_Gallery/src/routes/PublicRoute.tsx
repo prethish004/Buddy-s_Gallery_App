@@ -7,7 +7,7 @@ interface PublicRouteProps{
 const PublicRoute:FC<PublicRouteProps> = ({children}) => {
     const {user}=useAuth();
     if(user){
-        return <Navigate to='/' replace={true}/>
+        return <Navigate to='/h' replace={true}/>
     }
     return children;
 
