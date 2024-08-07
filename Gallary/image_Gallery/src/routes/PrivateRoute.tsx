@@ -7,7 +7,7 @@ interface PrivateRouteProps{
 const PrivateRoute:FC<PrivateRouteProps> = ({children}) => {
     const {user}=useAuth();
     if(!user){
-        return <Navigate to='/si' replace={true}/>
+        return <Navigate to='/si' />
     }
     return children;
 
