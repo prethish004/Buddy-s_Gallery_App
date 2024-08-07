@@ -460,7 +460,7 @@ interface Image {
 }
 
 const ImageGallery: React.FC = () => {
-  const { docs: images, isLoading } = useFriestore<Image>('images');
+  const { docs: images, isLoading } = useFriestore('images');
   const [searchQuery, setSearchQuery] = useState('');
   const [validImages, setValidImages] = useState<Image[]>([]);
   const [selectedImage, setSelectedImage] = useState<Image | null>(null);
