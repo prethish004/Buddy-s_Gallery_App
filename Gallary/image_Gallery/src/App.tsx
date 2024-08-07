@@ -9,7 +9,7 @@ function App() {
   return (
     <AuthProvider>
     <Routes>
-      <Route exact path="/si" element={<PublicRoute><Signup/></PublicRoute>}/>
+      <Route path="/si" element={<PublicRoute><Signup/></PublicRoute>}/>
       
       <Route path="/*" element={<PrivateRoute><Home/></PrivateRoute>}/>
     </Routes>
