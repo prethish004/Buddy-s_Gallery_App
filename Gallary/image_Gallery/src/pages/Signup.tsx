@@ -163,7 +163,7 @@ const Signup = () => {
         // Register a new user
         await createUserWithEmailAndPassword(auth, email, password);
       }
-      navigate('/');
+      navigate('/h');
     } catch (error) {
       setError(error.message);
     }
@@ -173,7 +173,7 @@ const Signup = () => {
     const provider = new GoogleAuthProvider();
     try {
       await signInWithPopup(auth, provider);
-      navigate('/');
+      navigate('/h');
     } catch (error) {
       setError(error.message);
     }
