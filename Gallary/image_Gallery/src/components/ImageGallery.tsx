@@ -596,6 +596,189 @@
 
 
 
+// import { useState, useEffect } from 'react';
+// import useFriestore from "../hooks/useFriestore";
+// import { FaCircleDown } from "react-icons/fa6";
+
+// interface Image {
+//   imageUrl: string;
+//   userEmail: string;
+//   createdAt: {
+//     toLocaleString: () => string;
+//   };
+// }
+
+// const ImageGallery: React.FC = () => {
+//   const { docs: images, isLoading } = useFriestore('images');
+//   const [searchQuery, setSearchQuery] = useState('');
+//   const [validImages, setValidImages] = useState<Image[]>([]);
+//   const [selectedImage, setSelectedImage] = useState<Image | null>(null);
+//   const [isModalOpen, setIsModalOpen] = useState(false);
+//   const [isCheckingImages, setIsCheckingImages] = useState(true);
+
+//   useEffect(() => {
+//     const checkImages = async () => {
+//       const validImageList: Image[] = [];
+
+//       for (const image of images) {
+//         try {
+//           const response = await fetch(image.imageUrl);
+//           if (response.ok) {
+//             validImageList.push(image);
+//           }
+//         } catch (error) {
+//           console.error(`Image ${image.imageUrl} is not valid:`, error);
+//         }
+//       }
+
+//       setValidImages(validImageList);
+//       setIsCheckingImages(false);
+//     };
+
+//     if (images.length > 0) {
+//       checkImages();
+//     }
+//   }, [images]);
+
+//   const handleSearchChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+//     setSearchQuery(e.target.value);
+//   };
+
+//   const filteredImages = validImages.filter((image) =>
+//     image.userEmail.toLowerCase().includes(searchQuery.toLowerCase())
+//   );
+
+//   const downloadImage = async (imageUrl: string, imageName: string) => {
+//     const response = await fetch(imageUrl);
+//     const blob = await response.blob();
+//     const fileType = response.headers.get('Content-Type');
+
+//     if (!fileType) {
+//       console.error('File type is null');
+//       return;
+//     }
+
+//     let fileExtension;
+
+//     if (fileType.includes('image/gif')) {
+//       fileExtension = '.gif';
+//     } else if (fileType.includes('image/jpeg') || fileType.includes('image/png')) {
+//       fileExtension = '.jpg'; // or '.png' depending on the type
+//     } else {
+//       console.error('Unsupported file type');
+//       return;
+//     }
+
+//     const link = document.createElement('a');
+//     link.href = URL.createObjectURL(blob);
+//     link.download = `${imageName}${fileExtension}`;
+//     link.click();
+
+//     URL.revokeObjectURL(link.href);
+//   };
+
+//   const openModal = (image: Image) => {
+//     setSelectedImage(image);
+//     setIsModalOpen(true);
+//   };
+
+//   const closeModal = () => {
+//     setSelectedImage(null);
+//     setIsModalOpen(false);
+//   };
+
+//   const loadingImageStyle = {
+//     width: '25rem', // 32 pixels in rem units
+//     height: '25rem', // 32 pixels in rem units
+//     animation: 'rotate 4s linear infinite',
+//   };
+
+//   const keyframes = `
+//     @keyframes rotate {
+//       0% {
+//         transform: rotate(0deg);
+//       }
+//       100% {
+//         transform: rotate(360deg);
+//       }
+//     }
+//   `;
+
+//   // Inject keyframes into the document head
+//   useEffect(() => {
+//     const styleSheet = document.createElement("style");
+//     styleSheet.type = "text/css";
+//     styleSheet.innerText = keyframes;
+//     document.head.appendChild(styleSheet);
+
+//     return () => {
+//       document.head.removeChild(styleSheet);
+//     };
+//   }, []);
+
+//   if (isLoading || isCheckingImages) {
+//     return (
+//       <div className="flex justify-center items-center h-screen">
+//         <img
+//           src="https://files.softicons.com/download/culture-icons/sharingan-icons-1.5-by-harenome-razanajato/ico/itachi.ico"
+//           alt="Loading..."
+//           style={loadingImageStyle}
+//         />
+//       </div>
+//     );
+//   }
+
+//   return (
+//     <div>
+//       <div className="flex justify-center mt-8">
+//         <input
+//           type="text"
+//           placeholder="🔍Search by uploader..."
+//           value={searchQuery}
+//           onChange={handleSearchChange}
+//           className="input input-bordered w-70 h-6"
+//         />
+//       </div>
+//       <div className="grid md:grid-cols-3 justify-center gap-4 mt-10">
+//         {filteredImages.map((image) => (
+//           <div key={image.imageUrl} className="card card-compact bg-base-100 w-full shadow-xl">
+//             <figure className="h-[15rem] overflow-hidden flex items-center" onClick={() => openModal(image)}>
+//               <img
+//                 src={image.imageUrl}
+//                 alt="Uploaded image"
+//                 className="object-cover cursor-pointer"
+//               />
+//             </figure>
+//             <div className="card-body">
+//               <p>Uploaded by: {image.userEmail}</p>
+//               <span>Created on: {image.createdAt.toLocaleString()}</span>
+//               <div className="flex justify-end">
+//                 <button onClick={() => downloadImage(image.imageUrl, `downloaded_image_${image.userEmail}`)} className="text-xl">
+//                   <FaCircleDown />
+//                 </button>
+//               </div>
+//             </div>
+//           </div>
+//         ))}
+//       </div>
+
+//       {isModalOpen && selectedImage && (
+//         <div className="modal modal-open">
+//           <div className="modal-box relative">
+//             <button className="btn btn-sm btn-circle absolute right-2 top-2" onClick={closeModal}>✕</button>
+//             <img src={selectedImage.imageUrl} alt="Selected image" className="w-full" />
+//           </div>
+//         </div>
+//       )}
+//     </div>
+//   );
+// };
+
+// export default ImageGallery;
+
+
+
+
 import { useState, useEffect } from 'react';
 import useFriestore from "../hooks/useFriestore";
 import { FaCircleDown } from "react-icons/fa6";
@@ -617,36 +800,35 @@ const ImageGallery: React.FC = () => {
   const [isCheckingImages, setIsCheckingImages] = useState(true);
 
   useEffect(() => {
-    const checkImages = async () => {
-      const validImageList: Image[] = [];
-
-      for (const image of images) {
-        try {
-          const response = await fetch(image.imageUrl);
-          if (response.ok) {
-            validImageList.push(image);
-          }
-        } catch (error) {
-          console.error(`Image ${image.imageUrl} is not valid:`, error);
+    const loadImage = async (image: Image) => {
+      try {
+        const response = await fetch(image.imageUrl);
+        if (response.ok) {
+          setValidImages(prevImages => [...prevImages, image]);
         }
+      } catch (error) {
+        console.error(`Image ${image.imageUrl} is not valid:`, error);
       }
-
-      setValidImages(validImageList);
-      setIsCheckingImages(false);
     };
 
     if (images.length > 0) {
-      checkImages();
+      images.forEach(image => loadImage(image));
+      setIsCheckingImages(false);
     }
   }, [images]);
+
+  // Sort the images in descending order based on the createdAt date before filtering
+  const sortedImages = [...validImages].sort((a, b) => {
+    return new Date(b.createdAt.toLocaleString()).getTime() - new Date(a.createdAt.toLocaleString()).getTime();
+  });
+
+  const filteredImages = sortedImages.filter((image) =>
+    image.userEmail.toLowerCase().includes(searchQuery.toLowerCase())
+  );
 
   const handleSearchChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setSearchQuery(e.target.value);
   };
-
-  const filteredImages = validImages.filter((image) =>
-    image.userEmail.toLowerCase().includes(searchQuery.toLowerCase())
-  );
 
   const downloadImage = async (imageUrl: string, imageName: string) => {
     const response = await fetch(imageUrl);
@@ -688,9 +870,9 @@ const ImageGallery: React.FC = () => {
   };
 
   const loadingImageStyle = {
-    width: '25rem', // 32 pixels in rem units
-    height: '25rem', // 32 pixels in rem units
-    animation: 'rotate 4s linear infinite',
+    width: '8rem', // 32 pixels in rem units
+    height: '8rem', // 32 pixels in rem units
+    animation: 'rotate 1s linear infinite', // Faster rotation
   };
 
   const keyframes = `
@@ -716,18 +898,6 @@ const ImageGallery: React.FC = () => {
     };
   }, []);
 
-  if (isLoading || isCheckingImages) {
-    return (
-      <div className="flex justify-center items-center h-screen">
-        <img
-          src="https://files.softicons.com/download/culture-icons/sharingan-icons-1.5-by-harenome-razanajato/ico/itachi.ico"
-          alt="Loading..."
-          style={loadingImageStyle}
-        />
-      </div>
-    );
-  }
-
   return (
     <div>
       <div className="flex justify-center mt-8">
@@ -739,28 +909,38 @@ const ImageGallery: React.FC = () => {
           className="input input-bordered w-70 h-6"
         />
       </div>
-      <div className="grid md:grid-cols-3 justify-center gap-4 mt-10">
-        {filteredImages.map((image) => (
-          <div key={image.imageUrl} className="card card-compact bg-base-100 w-full shadow-xl">
-            <figure className="h-[15rem] overflow-hidden flex items-center" onClick={() => openModal(image)}>
-              <img
-                src={image.imageUrl}
-                alt="Uploaded image"
-                className="object-cover cursor-pointer"
-              />
-            </figure>
-            <div className="card-body">
-              <p>Uploaded by: {image.userEmail}</p>
-              <span>Created on: {image.createdAt.toLocaleString()}</span>
-              <div className="flex justify-end">
-                <button onClick={() => downloadImage(image.imageUrl, `downloaded_image_${image.userEmail}`)} className="text-xl">
-                  <FaCircleDown />
-                </button>
+      {isLoading || isCheckingImages ? (
+        <div className="flex justify-center items-center h-screen">
+          <img
+            src="https://qph.cf2.quoracdn.net/main-qimg-abfb924483c5eaef9ab4822ebdc6c404"
+            alt="Loading..."
+            style={loadingImageStyle}
+          />
+        </div>
+      ) : (
+        <div className="grid md:grid-cols-3 justify-center gap-4 mt-10">
+          {filteredImages.map((image) => (
+            <div key={image.imageUrl} className="card card-compact bg-base-100 w-full shadow-xl">
+              <figure className="h-[15rem] overflow-hidden flex items-center" onClick={() => openModal(image)}>
+                <img
+                  src={image.imageUrl}
+                  alt="Uploaded image"
+                  className="object-cover cursor-pointer"
+                />
+              </figure>
+              <div className="card-body">
+                <p>Uploaded by: {image.userEmail}</p>
+                <span>Created on: {image.createdAt.toLocaleString()}</span>
+                <div className="flex justify-end">
+                  <button onClick={() => downloadImage(image.imageUrl, `downloaded_image_${image.userEmail}`)} className="text-xl">
+                    <FaCircleDown />
+                  </button>
+                </div>
               </div>
             </div>
-          </div>
-        ))}
-      </div>
+          ))}
+        </div>
+      )}
 
       {isModalOpen && selectedImage && (
         <div className="modal modal-open">
