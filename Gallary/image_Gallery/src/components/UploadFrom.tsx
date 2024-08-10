@@ -105,14 +105,16 @@ const UploadFrom = () => {
     }
   };
 
-  const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
-    e.preventDefault();
-    if (selectedFile) {
-      startUpload(selectedFile);
-      console.log(selectedFile);
-    }
-    setSelectedFile(null);
-  };
+ const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
+  e.preventDefault();
+  if (selectedFile) {
+    startUpload(selectedFile).then(() => {
+      window.location.reload(); // Reload the page after the upload is complete
+    });
+    console.log(selectedFile);
+  }
+  setSelectedFile(null);
+};
 
   return (
     <div className="text-center mt-10">
