@@ -815,7 +815,8 @@ const ImageGallery: React.FC = () => {
     setValidImages([]); 
     images.forEach(image => loadImage(image));
     setIsCheckingImages(false);
-  }, [images]);
+  }
+}, [images]);
 
   // Sort the images in descending order based on the createdAt date before filtering
   const sortedImages = [...validImages].sort((a, b) => {
