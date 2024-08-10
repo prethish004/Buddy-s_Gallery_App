@@ -125,7 +125,7 @@ const UploadFrom = () => {
         {error && <p className="text-red-500">{error}</p>}
         <button
           type="submit"
-          className={`btn gap-3 ${selectedFile ? 'bg-green-500 hover:bg-green-700' : 'bg-gray-400 hover:bg-gray-600'} ${Boolean(progress) && 'loading'}`}
+          className={`btn gap-3 ${selectedFile ? 'bg-green-500 hover:bg-emerald-400' : 'bg-gray-400 hover:bg-gray-600'} ${Boolean(progress) && 'loading'}`}
           style={Boolean(progress) ? { backgroundColor: 'red' } : {}}
           disabled={!selectedFile}
         >
