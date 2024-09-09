@@ -1,4 +1,5 @@
 # Buddy-s_Gallery_App
+
 ## Sign Up page 
 ![image](https://github.com/user-attachments/assets/b0226ffd-d707-482e-93b0-945738b3f7fa)
 
